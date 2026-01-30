@@ -1,0 +1,65 @@
+import User from "../model/user.model.js";
+import bcrypt from "bcrypt";
+import generateToken from "../utils/generateToken.js";
+
+export const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // 1️⃣ Validate input
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Email and password are required",
+      });
+    }
+
+    // 2️⃣ Find user + password
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid email or password",
+      });
+    }
+
+    // 3️⃣ Check user status
+    if (user.status !== "active") {
+      return res.status(403).json({
+        message: "User is not active",
+      });
+    }
+
+    // 4️⃣ Compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "Invalid email or password",
+      });
+    }
+
+    // 5️⃣ Generate JWT
+    const token = generateToken({
+      userId: user._id,
+      orgId: user.orgId,
+      role: user.role,
+    });
+
+    // 6️⃣ Send response
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        orgId: user.orgId,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+};
