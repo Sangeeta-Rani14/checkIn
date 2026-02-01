@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Satoshi", "sans-serif";
-  --breakpoint-3xl: 120rem;
+
+   --breakpoint-3xl: 120rem;
   /* Core Colors */
   --color-primary-color:oklch(58% 0.22 264);
   --color-secondary-color: oklch(64% 0.14 178);
   --color-primary-hover:oklch(54% 0.22 264);
-  --color-light-gray: #F9FAFB;
-  --color-surface:#FFFFFF;
+   --color-light-gray: #F9FAFB;
+   --color-surface:#FFFFFF;
 
   /* Text Colors */
-  --color-primary-text: #111827;
-  --color-secondry-text:#6B7280;
+   --color-primary-text: #111827;
+   --color-secondry-text:#6B7280;
    --color-muted-text:#9CA3AF;
    /* Status Colors */
 
-  --color-success:#16A34A;
-  --color-warning:#F59E0B;
+   --color-success:#16A34A;
+   --color-warning:#F59E0B;
    --color-error:#DC2626;
-    --color-info:#0EA5E9;
+   --color-info:#0EA5E9;
 
 
     /* Typography */
