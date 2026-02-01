@@ -6,9 +6,9 @@ import { loginUser } from "../controller/authController.js";
 const router = express.Router();
 
 router.post(
-  "/admin-only",
-  protect,
-  authorize("admin", "super_admin"),
+  "/login",
+  // protect,
+  // authorize("admin", "super_admin"),
   loginUser
 );
 router.post(

@@ -1,6 +1,6 @@
 import React from 'react'
 import FeatureCard from '../component/common/featureCard'
-
+import {Link} from "react-router-dom"
 const Home = () => {
   return (
     <div>
@@ -15,12 +15,12 @@ const Home = () => {
           </h1>
 
           <div className="flex gap-3">
-            <button className="px-4 py-2 text-sm rounded-md border border-[var(--color-primary-color)] text-[var(--color-primary-color)] hover:bg-[var(--color-primary-color)] hover:text-white transition">
+            <Link to='/login' className="px-4 py-2 text-sm rounded-md border border-[var(--color-primary-color)] text-[var(--color-primary-color)] hover:bg-[var(--color-primary-color)] hover:text-white transition">
               Login
-            </button>
-            <button className="px-4 py-2 text-sm rounded-md bg-[var(--color-primary-color)] text-white hover:bg-[var(--color-primary-hover)] transition">
+            </Link>
+            <Link to='/register' className="px-4 py-2 text-sm rounded-md bg-[var(--color-primary-color)] text-white hover:bg-[var(--color-primary-hover)] transition">
               Register
-            </button>
+            </Link>
           </div>
         </div>
       </header>
