@@ -1,10 +1,11 @@
 import User from "../model/user.model.js";
+import organization from "../model/organization.model.js";
 import bcrypt from "bcrypt";
 import generateToken from "../utils/generateToken.js";
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
-
+ console.log(req.body)
   try {
     // 1️⃣ Validate input
     if (!email || !password) {
@@ -14,7 +15,17 @@ export const loginUser = async (req, res) => {
     }
 
     // 2️⃣ Find user + password
-    const user = await User.findOne({ email }).select("+password");
+    // const user = await User.findOne({ email });
+    // const user = await User.findOne({ email })?.organization.findOne({email});
+
+    let user = await User.findOne({ email })
+
+   if (!user) {
+     user = await organization.findOne({ email })
+    }
+
+    console.log(user);
+
     if (!user) {
       return res.status(401).json({
         message: "Invalid email or password",
@@ -22,11 +33,11 @@ export const loginUser = async (req, res) => {
     }
 
     // 3️⃣ Check user status
-    if (user.status !== "active") {
-      return res.status(403).json({
-        message: "User is not active",
-      });
-    }
+    // if (user.status !== "active") {
+    //   return res.status(403).json({
+    //     message: "User is not active",
+    //   });
+    // }
 
     // 4️⃣ Compare password
     const isMatch = await bcrypt.compare(password, user.password);
