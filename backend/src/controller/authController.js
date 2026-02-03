@@ -15,10 +15,8 @@ export const loginUser = async (req, res) => {
     }
 
     // 2️⃣ Find user + password
-    // const user = await User.findOne({ email });
-    // const user = await User.findOne({ email })?.organization.findOne({email});
-
-    let user = await User.findOne({ email })
+  
+   let user = await User.findOne({ email })
 
    if (!user) {
      user = await organization.findOne({ email })
@@ -53,6 +51,13 @@ export const loginUser = async (req, res) => {
       orgId: user.orgId,
       role: user.role,
     });
+
+    res.cookie("auth", token, {
+    httpOnly: true,
+    secure: true,        // HTTPS only
+    sameSite: "lax",     // or "strict"
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  });
 
     // 6️⃣ Send response
     res.status(200).json({
