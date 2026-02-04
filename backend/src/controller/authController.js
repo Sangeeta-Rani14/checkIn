@@ -126,7 +126,7 @@ export const loginAdmin = async (req, res) => {
 
     res.cookie("auth", token, {
     httpOnly: true,
-    secure: true,       
+    secure: false,       
     sameSite: "lax",    
     maxAge: 7 * 24 * 60 * 60 * 1000
   });

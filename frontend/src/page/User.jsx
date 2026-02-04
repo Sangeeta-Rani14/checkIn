@@ -5,27 +5,27 @@ import Adduser from './Adduser'
 
 const User = () => {
   const [users, setUsers] = useState([])
-  // const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
   const [hide,setHide]=useState(false);
 
   useEffect(() => {
-    // fetchUsers()
+    fetchUsers()
   }, [])
 
-  // const fetchUsers = async () => {
-  //   try {
-  //     const res = await axios.get('http://localhost:5000/api/users')
-  //     setUsers(res.data.data || res.data)
-  //   } catch (err) {
-  //     console.error(err)
-  //   } finally {
-  //     setLoading(false)
-  //   }
-  // }
+  const fetchUsers = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/users/all')
+      setUsers(res.data.data || res.data)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
 
-  // if (loading) {
-  //   return <p className="text-center">Loading...</p>
-  // }
+  if (loading) {
+    return <p className="text-center">Loading...</p>
+  }
  
   const addUser =()=>{
     setHide(true)

@@ -1,26 +1,32 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import axios from 'axios';
+import Button from '../component/ui/Button';
+import { useAuth } from '../hooks/AuthHook';
 
 const Adduser = () => {
-  // Initialize state with all schema fields
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
-    orgId: "", 
     role: "employee",
-    industry: "", 
-    plan: ""      
   });
+const { user } = useAuth();
+  console.log('Current user:', user);
+  console.log('Cookies:', document.cookie);
 
   const onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const submit = async () => {
+    console.log('Cookies before request:', document.cookie);
     try {
-      // Axios POST request to your backend
-      const response = await axios.post('/api/users/create', data);
+ 
+      const response = await axios.post('http://localhost:5000/api/user/',
+         data,
+        {withCredentials: true}
+      );
+
       alert("User Created Successfully!");
       console.log(response.data);
     } catch (error) {
@@ -49,20 +55,11 @@ const Adduser = () => {
             <option value="security">Security</option>
             <option value="super_admin">Super Admin</option>
           </select>
-
-          {/* Status Dropdown - Matches Schema Enum */}
-          {/* <select name="status" value={data.status} onChange={onChange} className="w-full px-4 py-3 rounded-lg border border-muted">
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select> */}
-          
-          {/* OrgId - In a real app, this might be a hidden field or a dropdown */}
-          <input type="text" name="orgId" value={data.orgId} onChange={onChange} placeholder="Organization ID" className="w-full px-4 py-3 rounded-lg border border-muted" />
+        
         </div>
 
-        <button onClick={submit} className="w-full mt-6 py-3 rounded-lg bg-primary text-white hover:bg-primaryHover transition">
-          Create User
-        </button>
+       <Button btn_name={"Create User"} onClick={submit} />
+
       </div>
     </div>
   );
