@@ -2,19 +2,18 @@
 import express from "express"
 import { protect } from "../middleware/authMiddleware.js";
 import { authorize } from "../middleware/roleMiddleware.js";
-import { loginUser } from "../controller/authController.js";
+import { loginUser, loginAdmin} from "../controller/authController.js";
 const router = express.Router();
 const app= express();
 router.post(
   "/login",
-  // protect,
   // authorize("admin", "super_admin"),
-  loginUser
+   loginAdmin
 );
 router.post(
   "/user-only",
   protect,
-  authorize("employee"),
+  authorize("employee","admin", "super_admin"),
   loginUser
 );
 

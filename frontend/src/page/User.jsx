@@ -1,44 +1,54 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Button from '../component/ui/Button'
-import { useNavigate } from 'react-router-dom'
+import Adduser from './Adduser'
 
 const User = () => {
   const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(true)
-const navigate = useNavigate()
+  // const [loading, setLoading] = useState(true)
+  const [hide,setHide]=useState(false);
+
   useEffect(() => {
-    fetchUsers()
+    // fetchUsers()
   }, [])
 
-  const fetchUsers = async () => {
-    try {
-      const res = await axios.get('http://localhost:5000/api/users')
-      setUsers(res.data.data || res.data)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
+  // const fetchUsers = async () => {
+  //   try {
+  //     const res = await axios.get('http://localhost:5000/api/users')
+  //     setUsers(res.data.data || res.data)
+  //   } catch (err) {
+  //     console.error(err)
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
+
+  // if (loading) {
+  //   return <p className="text-center">Loading...</p>
+  // }
+ 
+  const addUser =()=>{
+    setHide(true)
   }
 
-  if (loading) {
-    return <p className="text-center">Loading...</p>
+  const allUser=()=>{
+    setHide(false);
   }
- const adduser =()=>{
-navigate("/")
- }
   return (
     <div className="bg-surface rounded-xl shadow p-6">
       <h2 className="text-sectionTitle font-semibold mb-4">
         Users
       </h2>
-        <Button btn_name={"Create User"}  onClick={adduser}/>
-        
-      <div className="overflow-x-auto">
-        <div>
-         
-        </div>
+        <Button btn_name={"Create User"}  onClick={addUser}/>
+         <Button btn_name={"Show All"}  onClick={allUser}/>
+
+        {
+          hide?
+            <Adduser/>
+
+          :
+                  (
+  <div className="overflow-x-auto">
         <table className="min-w-full border border-muted rounded-lg">
           <thead className="bg-lightGray">
             <tr>
@@ -64,6 +74,9 @@ navigate("/")
           </tbody>
         </table>
       </div>
+          )
+        }
+      
 
 
     </div>

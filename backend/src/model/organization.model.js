@@ -7,6 +7,7 @@ const orgSchema = new mongoose.Schema({
   industry: String,
   plan: String,
   address: String,
+  role:{type:String,default:"super_admin"},
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   orgId: {

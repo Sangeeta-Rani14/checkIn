@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link, Outlet } from 'react-router-dom'
+import { useAuth } from '../../hooks/AuthHook'
 
 const DashboardLayout = () => {
+  const {user} =useAuth();
+  console.log(user.user);
   return (
     <div className="min-h-screen flex bg-lightGray font-inter">
       
@@ -9,15 +12,15 @@ const DashboardLayout = () => {
       <aside className="w-64 bg-surface shadow-lg">
         <div className="h-16 flex items-center justify-center border-b">
           <h1 className="text-lg font-semibold text-primary">
-            MyOrg
+             {user.user.name}
           </h1>
         </div>
 
         <nav className="p-4 space-y-2">
-          <NavItem label="Dashboard" />
-          <NavItem label="Organizations" />
-          <Link to='/users'><NavItem label="Users" /></Link>
-          <NavItem label="Settings" />
+          <Link to="/dashboard/dashboard"><NavItem label="Dashboard" /></Link>
+          <Link to="/dashboard/users"><NavItem label="Organizations" /></Link>
+          <Link to='/dashboard/users'><NavItem label="Users" /></Link>
+          <Link to="/dashboard/users"><NavItem label="Settings" /></Link>
         </nav>
       </aside>
 
@@ -32,11 +35,11 @@ const DashboardLayout = () => {
 
           <div className="flex items-center gap-4">
             <span className="text-textSecondary text-sm">
-              Admin
+              {user.user.role}
             </span>
             <div className="w-9 h-9 rounded-full bg-primary text-primary-color
                             flex items-center justify-center">
-              A
+              {user.user.name.charAt(0)}
             </div>
           </div>
         </header>

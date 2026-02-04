@@ -3,6 +3,7 @@ import Input from '../component/ui/Input'
 import Button from '../component/ui/Button'
 import { useNavigate } from 'react-router-dom'
 import axios from "axios"
+import { useAuth } from '../hooks/AuthHook'
 const Login = () => {
   const [data, setData] = useState({
     email: '',
@@ -10,6 +11,7 @@ const Login = () => {
   })
 
 const navigate = useNavigate()
+const {login} = useAuth()
   const onChange = (e) => {
     const { name, value } = e.target
     setData(prev => ({
@@ -19,10 +21,19 @@ const navigate = useNavigate()
   }
 
   const submit = async () => {
-    console.log(data);
-      // navigate('/dashboard')
       try{
-          const response = await axios.post('http://localhost:5000/api/auth/login',data)
+          const response = await axios.post('http://localhost:5000/api/auth/login',data,
+            {
+              withCredentials: true
+            }
+             
+          )
+          login(response.data)
+          if(response.data.success==true){
+            navigate("/dashboard")
+          }
+          
+          console.log(document.cookie)
           console.log(response.data)
 
 
